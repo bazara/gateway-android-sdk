@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
+import android.util.Log;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.wallet.AutoResolveHelper;
@@ -457,6 +458,7 @@ public class Gateway {
 
         // log response
         logger.logResponse(c, responseData);
+        Log.d("Gateway", responseData);
 
         // parse the response body
         GatewayMap response = new GatewayMap(responseData);
