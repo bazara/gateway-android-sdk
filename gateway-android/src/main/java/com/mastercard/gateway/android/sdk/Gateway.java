@@ -431,6 +431,7 @@ public class Gateway {
 
         // log request data
         logger.logRequest(c, requestData);
+        Log.d("Gateway", requestData);
 
         // write request data
         if (requestData != null) {
