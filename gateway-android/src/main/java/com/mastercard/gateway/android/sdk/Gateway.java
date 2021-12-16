@@ -427,11 +427,18 @@ public class Gateway {
         HttpsURLConnection c = createHttpsUrlConnection(request);
 
         // encode request data to json
+        String _request = String.format("%s\n%s\n%s\n%s",
+            gson.toJson(request.method),
+            gson.toJson(request.url),
+            gson.toJson(request.payload),
+            gson.toJson(request.extraHeaders)
+        );
         String requestData = gson.toJson(request.payload);
 
         // log request data
         logger.logRequest(c, requestData);
         Log.d("Gateway", requestData);
+        Log.d("Gateway Request", _request);
 
         // write request data
         if (requestData != null) {
@@ -459,7 +466,7 @@ public class Gateway {
 
         // log response
         logger.logResponse(c, responseData);
-        Log.d("Gateway", responseData);
+        Log.d("Gateway", String.format("Data: %s \n StatusCode: %s", responseData, statusCode));
 
         // parse the response body
         GatewayMap response = new GatewayMap(responseData);
