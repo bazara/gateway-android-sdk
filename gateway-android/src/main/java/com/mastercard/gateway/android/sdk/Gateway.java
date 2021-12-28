@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
+import android.util.Log;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.wallet.AutoResolveHelper;
@@ -426,10 +427,18 @@ public class Gateway {
         HttpsURLConnection c = createHttpsUrlConnection(request);
 
         // encode request data to json
+        String _request = String.format("%s\n%s\n%s\n%s",
+            gson.toJson(request.method),
+            gson.toJson(request.url),
+            gson.toJson(request.payload),
+            gson.toJson(request.extraHeaders)
+        );
         String requestData = gson.toJson(request.payload);
 
         // log request data
         logger.logRequest(c, requestData);
+        Log.d("Gateway", requestData);
+        Log.d("Gateway Request", _request);
 
         // write request data
         if (requestData != null) {
@@ -457,6 +466,7 @@ public class Gateway {
 
         // log response
         logger.logResponse(c, responseData);
+        Log.d("Gateway", String.format("Data: %s \n StatusCode: %s", responseData, statusCode));
 
         // parse the response body
         GatewayMap response = new GatewayMap(responseData);
